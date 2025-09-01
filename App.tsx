@@ -5,41 +5,41 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import {StatusBar, StyleSheet, Text, useColorScheme, View} from 'react-native';
 import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
+    SafeAreaView, useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import React from "react";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {createStaticNavigation} from "@react-navigation/native";
+import NewsList from "./src/screens/newsList";
+import NewsDetails from "./src/screens/newsDetails";
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+    return <Navigation/>;
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
 }
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
 
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+const RootStack = createNativeStackNavigator({
+    initialRouteName: 'NewsList',
+    screens: {
+        NewsList: {
+            screen: NewsList,
+            options: {
+                title: 'Новости',
+            }
+        },
+        NewsDetails: {
+            screen: NewsDetails,
+            options: {
+                title: 'О новости'
+            }
+        },
+    },
 });
+
+const Navigation = createStaticNavigation(RootStack);
+
 
 export default App;
