@@ -16,6 +16,7 @@ export const getTopHeadlines = async (
     category?: string,
     query?: string
 ) => {
+    //console.log(page, pageSize);
     const response = await newsApi.get("/top-headlines", {
         params: {
             country: "us",
